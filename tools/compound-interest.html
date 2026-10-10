@@ -1,0 +1,57 @@
+---
+layout: page
+title: Compound Interest Calculator
+permalink: /tools/compound-interest.html
+---
+
+<p>See how money can grow over time when the interest you earn also earns interest.</p>
+
+<div class="calc">
+  <label>Starting amount ($)
+    <input id="start" type="number" min="0" value="100">
+  </label>
+  <label>Amount added each year ($)
+    <input id="yearly" type="number" min="0" value="50">
+  </label>
+  <label>Yearly interest rate (%)
+    <input id="rate" type="number" min="0" step="0.1" value="7">
+  </label>
+  <label>Number of years
+    <input id="years" type="number" min="1" max="60" value="10">
+  </label>
+  <button onclick="calculate()">Calculate</button>
+</div>
+
+<div id="result" class="result"></div>
+
+<p><em>Educational example only. The rate is hypothetical: real returns vary and can be negative. This is not financial advice.</em></p>
+
+<script>
+function calculate() {
+  var start  = parseFloat(document.getElementById("start").value);
+  var yearly = parseFloat(document.getElementById("yearly").value);
+  var rate   = parseFloat(document.getElementById("rate").value) / 100;
+  var years  = parseInt(document.getElementById("years").value, 10);
+  var out    = document.getElementById("result");
+
+  if (isNaN(start) || isNaN(yearly) || isNaN(rate) || isNaN(years) ||
+      start < 0 || yearly < 0 || rate < 0 || years < 1) {
+    out.innerHTML = "Please enter valid, positive numbers.";
+    return;
+  }
+
+  var balance = start;
+  for (var i = 1; i <= years; i++) {
+    balance = balance * (1 + rate) + yearly;
+  }
+
+  var contributed = start + yearly * years;
+  var earned = balance - contributed;
+
+  out.innerHTML =
+    "<strong>After " + years + " years: $" + balance.toFixed(2) + "</strong><br>" +
+    "You put in: $" + contributed.toFixed(2) + "<br>" +
+    "Growth from interest: $" + earned.toFixed(2);
+}
+calculate();
+</script>
