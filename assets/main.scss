@@ -1,0 +1,20 @@
+---
+---
+@import "minima";
+
+.site-header { border-top: 5px solid #2a7ae2; }
+.site-title, .site-title:visited { font-weight: 700; }
+
+.calc { display: grid; gap: 12px; max-width: 360px; margin-bottom: 16px; }
+.calc label { display: flex; flex-direction: column; font-weight: 600; }
+.calc input { padding: 8px; font-size: 16px; margin-top: 4px; }
+.calc button {
+  padding: 10px; font-size: 16px; border: 0; border-radius: 6px;
+  background: #2a7ae2; color: #fff; cursor: pointer;
+}
+.calc button:hover { background: #1f5fb3; }
+.result {
+  background: #eef5ff; border-left: 4px solid #2a7ae2;
+  padding: 12px 16px; margin-bottom: 16px; border-radius: 4px;
+}
+.disclaimer { font-size: 0.85em; text-align: center; margin: 12px 0; }
