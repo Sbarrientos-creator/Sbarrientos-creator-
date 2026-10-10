@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Generador de posts · CodeCapital</title>
+<style>
+:root {
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  --bg: #f4f7fb; --card: #ffffff; --text: #1b2430; --muted: #5b6675;
+  --line: #d6dde8; --accent: #2a7ae2; --accent-ink: #ffffff; --soft: #eaf2ff; --ok: #17794a;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e141b; --card: #171f29; --text: #e6ecf3; --muted: #9aa7b6;
+    --line: #2a3644; --accent: #5aa0ff; --accent-ink: #08121f; --soft: #14263d; --ok: #4cc58a;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e141b; --card: #171f29; --text: #e6ecf3; --muted: #9aa7b6;
+  --line: #2a3644; --accent: #5aa0ff; --accent-ink: #08121f; --soft: #14263d; --ok: #4cc58a;
+}
+html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  line-height: 1.5;
+}
+.wrap { max-width: 760px; margin: 0 auto; padding: 20px 16px 48px; }
+h1 { font-size: 1.6rem; margin: 0 0 4px; }
+.sub { color: var(--muted); margin: 0 0 20px; }
+.card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 12px; padding: 16px; margin-bottom: 16px;
+}
+.step { display: flex; align-items: center; gap: 10px; font-weight: 700; margin: 0 0 12px; }
+.num {
+  background: var(--accent); color: var(--accent-ink); width: 26px; height: 26px;
+  border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+  font-size: 0.9rem; flex: none;
+}
+label { display: block; font-weight: 600; margin: 12px 0 4px; font-size: 0.95rem; }
+input, select, textarea {
+  width: 100%; padding: 10px; font-size: 16px; font-family: inherit;
+  border: 1px solid var(--line); border-radius: 8px;
+  background: var(--bg); color: var(--text);
+}
+textarea { min-height: 220px; resize: vertical; font-family: ui-monospace, Consolas, monospace; font-size: 14px; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 560px) { .row { grid-template-columns: 1fr; } }
+.hint { color: var(--muted); font-size: 0.85rem; margin: 4px 0 0; }
+.btn {
+  display: inline-block; padding: 11px 16px; font-size: 16px; font-weight: 600;
+  border-radius: 8px; border: 1px solid var(--line); background: var(--card);
+  color: var(--text); cursor: pointer; text-decoration: none; text-align: center;
+}
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn.big { width: 100%; padding: 14px; font-size: 17px; }
+.btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.filebox {
+  background: var(--soft); border-left: 4px solid var(--accent);
+  padding: 10px 12px; border-radius: 6px; font-family: ui-monospace, Consolas, monospace;
+  word-break: break-all; font-size: 14px;
+}
+.status { color: var(--ok); font-weight: 600; min-height: 1.4em; margin-top: 8px; }
+.warn { color: var(--muted); font-size: 0.9rem; }
+ol { padding-left: 20px; margin: 8px 0 0; }
+li { margin-bottom: 6px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>✍️ Generador de posts</h1>
+  <p class="sub">CodeCapital · Llena el formulario y publica un post en tu sitio en menos de 1 minuto.</p>
+
+  <div class="card">
+    <p class="step"><span class="num">1</span> Elige un punto de partida</p>
+    <select id="preset">
+      <option value="blank-code">Plantilla en blanco: tutorial de código</option>
+      <option value="blank-news">Plantilla en blanco: noticia financiera explicada</option>
+      <option value="html">Ejemplo listo: Your First HTML Page</option>
+      <option value="invest">Ejemplo listo: What Is Investing?</option>
+    </select>
+    <p class="hint">Los ejemplos listos son los dos posts iniciales. Úsalos para ver tu sitio llenarse ya.</p>
+  </div>
+
+  <div class="card">
+    <p class="step"><span class="num">2</span> Escribe tu post</p>
+
+    <label for="title">Título</label>
+    <input id="title" type="text" placeholder="Ej: Add Color and Style with CSS">
+
+    <div class="row">
+      <div>
+        <label for="cat">Sección</label>
+        <select id="cat">
+          <option value="code">Code Corner (código)</option>
+          <option value="money">Money Matters (finanzas)</option>
+        </select>
+      </div>
+      <div>
+        <label for="author">Autor</label>
+        <input id="author" type="text" placeholder="Tu nombre">
+      </div>
+    </div>
+
+    <label for="date">Fecha</label>
+    <input id="date" type="date">
+    <p class="hint">Usa la fecha de hoy o una anterior. Las fechas futuras no se publican.</p>
+
+    <label for="body">Contenido del post</label>
+    <textarea id="body" placeholder="Escribe aquí el artículo..."></textarea>
+    <p class="hint">Formato: <code>## Subtítulo</code>, <code>**negrita**</code>, <code>- lista</code>, <code>[texto](https://enlace.com)</code>. Para código, ponlo entre líneas de tres comillas invertidas.</p>
+  </div>
+
+  <div class="card">
+    <p class="step"><span class="num">3</span> Revisa el archivo que se creará</p>
+    <label for="path" style="margin-top:0">Nombre y ruta del archivo</label>
+    <input id="path" type="text">
+    <p class="hint">Se genera solo. Siempre debe empezar con <code>_posts/</code> y terminar en <code>.md</code>.</p>
+
+    <div class="btns">
+      <a id="gh" class="btn primary big" target="_blank" rel="noopener">Abrir en GitHub para publicar →</a>
+    </div>
+    <p id="long" class="warn" style="display:none"></p>
+
+    <p class="step" style="margin-top:18px"><span class="num">4</span> En GitHub</p>
+    <ol>
+      <li>Se abre la pantalla de “nuevo archivo” con el nombre y el contenido ya puestos.</li>
+      <li>Haz clic en el botón verde <strong>Commit changes…</strong> y luego en <strong>Commit changes</strong>.</li>
+      <li>Espera 1 a 2 minutos y recarga tu sitio con <strong>Ctrl + F5</strong>.</li>
+    </ol>
+
+    <hr style="border:0;border-top:1px solid var(--line);margin:16px 0">
+    <p class="warn"><strong>Plan B</strong> (si GitHub no rellena el contenido): copia el nombre y el contenido y pégalos tú en <em>Add file → Create new file</em>.</p>
+    <div class="btns">
+      <button class="btn" id="copyName">Copiar nombre</button>
+      <button class="btn" id="copyContent">Copiar contenido</button>
+    </div>
+    <div class="status" id="status"></div>
+  </div>
+
+  <div class="card">
+    <p class="step" style="margin-bottom:6px">Vista previa del archivo completo</p>
+    <div class="filebox" id="pathPreview"></div>
+    <textarea id="preview" readonly style="margin-top:10px;min-height:180px"></textarea>
+  </div>
+</div>
+
+<script>
+var OWNER = "Sbarrientos-creator";
+var REPO = "Sbarrientos-creator-";
+var BRANCH = "main";
+var F = "\u0060\u0060\u0060";
+
+var PRESETS = {
+  "blank-code": {
+    title: "", cat: "code", body: [
+      "Escribe aquí una introducción corta: ¿qué aprenderá el lector?",
+      "", "## Lo que necesitas", "", "- Un computador", "- Un editor de texto", "",
+      "## Paso 1", "", "Explica el primer paso. Para mostrar código:", "",
+      F + "html", "<h1>Hola, mundo</h1>", F, "",
+      "## Reto", "", "Propón un pequeño ejercicio para practicar."
+    ].join("\n")
+  },
+  "blank-news": {
+    title: "News Explained: ", cat: "money", body: [
+      "*Educational content only. This is not financial advice.*", "",
+      "## What happened", "", "Explica la noticia en 2 o 3 frases, con tus propias palabras. Incluye la fecha.", "",
+      "## Why it matters", "", "Explica a quién afecta (ahorradores, estudiantes, familias).", "",
+      "## Key words", "", "- **Término:** definición simple.", "",
+      "## What we can learn", "", "Una o dos lecciones. No digas a nadie que compre o venda algo.", "",
+      "## Sources", "", "- [Nombre del artículo](https://enlace-a-la-fuente-original.com)"
+    ].join("\n")
+  },
+  "html": {
+    title: "Your First HTML Page in 5 Minutes", cat: "code", body: [
+      "HTML is the skeleton of every website you visit. In this tutorial you will build your first page with nothing but a text editor and a browser.",
+      "", "## Step 1: Create the file", "",
+      "Open your editor, paste the code below and save it as `index.html`.", "",
+      F + "html", "<!DOCTYPE html>", "<html>", "  <head>", "    <title>My First Page</title>", "  </head>",
+      "  <body>", "    <h1>Hello, world!</h1>", "    <p>My name is Alex and I am learning to code.</p>",
+      "  </body>", "</html>", F, "",
+      "## Step 2: Open it", "",
+      "Double-click the file. It opens in your browser. Congratulations, you made a web page!", "",
+      "## Challenge", "",
+      "Change the text and add a second paragraph. Share your result with the team!"
+    ].join("\n")
+  },
+  "invest": {
+    title: "What Is Investing? Explained Simply", cat: "money", body: [
+      "*Educational content only. This is not financial advice.*", "",
+      "## The basic idea", "",
+      "**Saving** means keeping money safe so you can use it later. **Investing** means putting money into something, such as a company or a fund, hoping it grows over time. Investing can grow your money more than saving, but you can also lose some of it.", "",
+      "## Key words", "",
+      "- **Stock:** a small piece of ownership in a company.",
+      "- **Bond:** a loan you give to a company or government, which pays you interest.",
+      "- **ETF / fund:** a basket of many investments bought together.",
+      "- **Risk:** the chance that an investment loses value.",
+      "- **Inflation:** prices rising over time, so the same money buys less.", "",
+      "## The power of compound interest", "",
+      "Compound interest means you earn interest on your interest. As a made-up example, $100 growing 7% a year becomes about $196.72 after 10 years.", "",
+      "## Be careful", "",
+      "- Be suspicious of anyone promising guaranteed or fast profits. That is a classic scam sign.",
+      "- Past results do not guarantee future results.",
+      "- Never invest money you cannot afford to lose, and talk to a parent or guardian first."
+    ].join("\n")
+  }
+};
+
+function $(id) { return document.getElementById(id); }
+
+function pad(n) { return (n < 10 ? "0" : "") + n; }
+function today() {
+  var d = new Date();
+  return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+}
+
+function slugify(s) {
+  var t = s.normalize ? s.normalize("NFD").replace(/[\u0300-\u036f]/g, "") : s;
+  t = t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  return t || "new-post";
+}
+
+var pathEdited = false;
+
+function buildPath() {
+  return "_posts/" + ($("date").value || today()) + "-" + slugify($("title").value) + ".md";
+}
+
+function buildContent() {
+  var title = $("title").value.replace(/"/g, "'") || "Untitled";
+  var author = $("author").value || "CodeCapital Team";
+  return [
+    "---",
+    "layout: post",
+    'title: "' + title + '"',
+    "categories: " + $("cat").value,
+    "author: " + author,
+    "---",
+    "",
+    $("body").value
+  ].join("\n");
+}
+
+function update() {
+  if (!pathEdited) { $("path").value = buildPath(); }
+  var path = $("path").value.trim();
+  var content = buildContent();
+  $("pathPreview").textContent = path;
+  $("preview").value = content;
+
+  var encPath = path.split("/").map(encodeURIComponent).join("/");
+  var base = "https://github.com/" + OWNER + "/" + REPO + "/new/" + BRANCH + "?filename=" + encPath;
+  var withValue = base + "&value=" + encodeURIComponent(content);
+  var tooLong = withValue.length > 7000;
+  $("gh").href = tooLong ? base : withValue;
+
+  var note = $("long");
+  if (tooLong) {
+    note.style.display = "block";
+    note.textContent = "Tu post es largo: GitHub abrirá el archivo con el nombre listo, pero el contenido debes pegarlo tú. Usa el botón “Copiar contenido” de abajo.";
+  } else {
+    note.style.display = "none";
+  }
+}
+
+function loadPreset(key) {
+  var p = PRESETS[key];
+  $("title").value = p.title;
+  $("cat").value = p.cat;
+  $("body").value = p.body;
+  pathEdited = false;
+  update();
+}
+
+function copyText(text, msg) {
+  var done = function () { $("status").textContent = msg; setTimeout(function () { $("status").textContent = ""; }, 2500); };
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, fallback);
+      return;
+    }
+  } catch (e) {}
+  fallback();
+  function fallback() {
+    var ta = document.createElement("textarea");
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); done(); } catch (e) { $("status").textContent = "No se pudo copiar. Selecciona el texto manualmente."; }
+    document.body.removeChild(ta);
+  }
+}
+
+(function init() {
+  $("date").value = today();
+  try { var a = localStorage.getItem("cc_author"); if (a) { $("author").value = a; } } catch (e) {}
+
+  ["title", "cat", "author", "date", "body"].forEach(function (id) {
+    $(id).addEventListener("input", function () {
+      if (id === "author") { try { localStorage.setItem("cc_author", $("author").value); } catch (e) {} }
+      if (id === "title" || id === "date") { pathEdited = false; }
+      update();
+    });
+  });
+  $("path").addEventListener("input", function () { pathEdited = true; update(); });
+  $("preset").addEventListener("change", function () { loadPreset(this.value); });
+  $("copyName").addEventListener("click", function () { copyText($("path").value.trim(), "✓ Nombre copiado"); });
+  $("copyContent").addEventListener("click", function () { copyText(buildContent(), "✓ Contenido copiado"); });
+
+  loadPreset("blank-code");
+})();
+</script>
+</body>
+</html>
