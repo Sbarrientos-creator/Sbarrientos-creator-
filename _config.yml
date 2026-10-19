@@ -3,12 +3,8 @@ description: Learn to code. Understand money.
 theme: minima
 markdown: kramdown
 
-# If your repository is named YOURUSERNAME.github.io, leave these two lines empty.
-# If it has another name (for example "codecapital"), set:
-#   baseurl: "/codecapital"
-#   url: "https://YOURUSERNAME.github.io"
- baseurl: "/Sbarrientos-creator-"
- url: "https://sbarrientos-creator.github.io"
+baseurl: "/Sbarrientos-creator-"
+url: "https://sbarrientos-creator.github.io"
 
 # Top menu (file names must match exactly)
 header_pages:
