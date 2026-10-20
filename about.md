@@ -20,13 +20,13 @@ collaborative, student-run website.
 
 | Role | Name |
 |---|---|
-| Project leader / Editor | *Your name here* |
-| Code writers | *Names here* |
-| Finance writers | *Names here* |
-| Web developers | *Names here* |
-| Fact-checkers | *Names here* |
-| Faculty advisor | *Teacher's name here* |
+| Project leader / Editor | *Santiago Barrientos* |
+| Code writers | *Santiago Barrientos* |
+| Finance writers | *Santiago Barrientos* |
+| Web developers | *Santiago Barrientos* |
+| Fact-checkers | *Santiago Barrientos* |
+| Faculty advisor | *Santiago Barrientos* |
 
-## Contact
+## santi.barrientos2011@gmail.com
 
 *Add your school email or a link to a Google Form for suggestions and questions.*
